@@ -13,7 +13,7 @@ module.exports = {
           type: Sequelize.STRING,
           allowNull: false
       },
-      titleMovie: {
+      title_movie: {
         type: Sequelize.STRING,
         allowNull: false
       },

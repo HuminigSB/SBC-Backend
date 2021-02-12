@@ -9,10 +9,10 @@ module.exports = {
           autoIncrement: true,
           primaryKey: true,
         },
-        idUser: {
+        id_user: {
           type: Sequelize.INTEGER
         },
-        idCine: {
+        id_cine: {
           type: Sequelize.INTEGER
         },
         street: {

@@ -15,6 +15,9 @@ module.exports = {
       id_sessao: {
         type: Sequelize.INTEGER
       },
+      reservado: {
+        type: Sequelize.BOOLEAN
+      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false

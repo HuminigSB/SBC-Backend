@@ -3,8 +3,8 @@ import Sequelize, {Model} from 'sequelize';
 class Endereco extends Model{
     static init(sequelize){
         super.init({
-            idUser: Sequelize.INTEGER,
-            idCine: Sequelize.INTEGER,
+            id_user: Sequelize.INTEGER,
+            id_cine: Sequelize.INTEGER,
             street: Sequelize.STRING,
             number: Sequelize.INTEGER,
             complement: Sequelize.STRING,
