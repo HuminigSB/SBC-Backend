@@ -9,10 +9,13 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
-      id_poltrona: {
+      id_sessao: {
         type: Sequelize.INTEGER
       },
-      id_sessao: {
+      id_sala: {
+        type: Sequelize.INTEGER
+      },
+      id_poltrona: {
         type: Sequelize.INTEGER
       },
       reservado: {
