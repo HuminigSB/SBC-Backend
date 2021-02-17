@@ -22,7 +22,12 @@ class BilheteController{
     }
 
     async update(req, res){
+        const {id, reservado} = req.body
+        const bilheteEdit = await Bilhete.findByPk(id)
+        
+        await bilheteEdit.update({reservado});
 
+        return res.status(200).json({success: "Bilhete atualizado com sucesso"});
     }
 
     async delete(req, res){
