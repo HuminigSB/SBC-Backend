@@ -15,6 +15,7 @@ const routes = new Router();
 
 // Autenticação
 routes.post('/login', LoginController.store);
+routes.get('/login', LoginController.index);
 
 // Usuario
 routes.post('/user', UserController.store);
