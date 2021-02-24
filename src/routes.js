@@ -10,15 +10,19 @@ import PoltronaController from './app/controllers/PoltronaController';
 import ReservaController from './app/controllers/ReservaController';
 import SalaController from './app/controllers/SalaController';
 import SessaoController from './app/controllers/SessaoController';
+import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
 
 // Autenticação
 routes.post('/login', LoginController.store);
-routes.get('/login', LoginController.index);
+routes.post('/user', UserController.store);
+
+// Token de autenticação
+routes.use(authMiddleware);
 
 // Usuario
-routes.post('/user', UserController.store);
+routes.get('/login', LoginController.index);
 routes.get('/user', UserController.index);
 routes.put('/user/:id', UserController.update);
 routes.delete('/user', UserController.delete);
