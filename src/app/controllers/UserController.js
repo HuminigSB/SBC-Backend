@@ -24,7 +24,8 @@ class UserController{
         });
 
         if(!(await schema.isValid(req.body))){
-            return res.status(400).json({error: "A validação falhou"})
+            const teste = await schema.isValid(req.body)
+            return res.status(400).json({error: "A validação falhou, lembre-se os campos são obrigatórios e a senha precisa ter no minimo 6 digitos."})
         }
 
         /* Validar se é um cpf válido*/
