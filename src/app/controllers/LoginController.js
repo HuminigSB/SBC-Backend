@@ -20,7 +20,7 @@ class LoginController{
 
         /* Verifico se o usuário existe */
         if(!userExists){
-            return res.status(400).json({erro: "Esse usuário não existe"});
+            return res.status(400).json({error: "Esse usuário não existe"});
         }
 
         /* verifico se a senha está correta */
@@ -39,7 +39,7 @@ class LoginController{
             })
         }
 
-        return res.status(400).json({erro: "Não foi possível fazer login com esse usuário/senha."});
+        return res.status(400).json({error: "Não foi possível fazer login com esse usuário/senha."});
     }
 
     async index(req, res){
