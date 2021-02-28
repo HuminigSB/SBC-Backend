@@ -22,7 +22,7 @@ routes.post('/user', UserController.store);
 routes.use(authMiddleware);
 
 // Usuario
-routes.get('/login', LoginController.index);
+routes.get('/login/:id', LoginController.index);
 routes.get('/user', UserController.index);
 routes.put('/user/:id', UserController.update);
 routes.delete('/user', UserController.delete);
