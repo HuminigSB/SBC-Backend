@@ -43,16 +43,7 @@ class LoginController{
     }
 
     async index(req, res){
-        const schema = Yup.object().shape({
-            id: Yup.string().required()
-        });
-
-        /* Verifico se a validação falhou */
-        if(!(await schema.isValid(req.body))){
-            return res.status(400).json({error: "A validação falhou!"})
-        }
-
-        const {id} = req.body
+        const {id} = req.params
         const user = await User.findOne({ where: { id }})
         if(!user){
             return res.status(400).json({error: "Usuário não existe"})
