@@ -54,6 +54,22 @@ class UserController{
     }
 
     async update(req, res){
+        /* Validar os campos */
+        const schema = Yup.object().shape({
+            name: Yup.string().required(),
+            email: Yup.string().email().required(),
+            cpf: Yup.string().required(),
+            rg: Yup.string().required(),
+            phone: Yup.string(),
+            number: Yup.string(),
+            username: Yup.string().required()
+        });
+
+        if(!(await schema.isValid(req.body))){
+            const teste = await schema.isValid(req.body)
+            return res.status(400).json({error: "A validação falhou, lembre-se os campos são obrigatórios e a senha precisa ter no minimo 6 digitos."})
+        }
+
         const userEdit = await User.findByPk(req.params.id)
 
         const { email, username } = req.body
@@ -71,6 +87,14 @@ class UserController{
             const userExists = await User.findOne({where: {username}})
             if(userExists){
                 return res.status(400).json({error: "O nome de usuário já está em uso"})
+            }
+        }
+
+        /* Verifico se o cpf é válido */
+        if(req.body.cpf && req.body.cpf !== userEdit.cpf){
+            const isValid = cpf.isValid(req.body.cpf)
+            if(!isValid){
+                return res.status(400).json({error: "O cpf é inválido"})
             }
         }
 
