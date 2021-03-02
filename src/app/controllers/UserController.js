@@ -1,5 +1,5 @@
 import * as Yup from 'yup'
-import { cpf } from 'cpf-cnpj-validator'; 
+import Validator from 'cpf-rg-validator'
 
 import User from '../models/User';
 
@@ -29,10 +29,18 @@ class UserController{
         }
 
         /* Validar se é um cpf válido*/
-        const isCpf = cpf.isValid(req.body.cpf);
+        const isCpf = Validator.cpf(req.body.cpf);
 
         if(!isCpf){
             return res.status(400).json({error: "Esse não é um cpf válido"});
+        }
+
+        /* Validar se é um rg válido*/
+        const isRg = Validator.rg(req.body.rg)
+        console.log(isRg)
+
+        if(!isRg){
+            return res.status(400).json({error: "Esse não é um rg válido"});
         }
 
         /* Validar se o e-mail já está em uso*/
@@ -92,9 +100,17 @@ class UserController{
 
         /* Verifico se o cpf é válido */
         if(req.body.cpf && req.body.cpf !== userEdit.cpf){
-            const isValid = cpf.isValid(req.body.cpf)
+            const isValid = Validator.cpf(req.body.cpf)
             if(!isValid){
                 return res.status(400).json({error: "O cpf é inválido"})
+            }
+        }
+
+        /* Verifico se o rg é válido */
+        if(req.body.rg && req.body.rg !== userEdit.rg){
+            const isValid = Validator.rg(req.body.rg)
+            if(!isValid){
+                return res.status(400).json({error: "O rg é inválido"})
             }
         }
 
