@@ -1,5 +1,5 @@
 import * as Yup from 'yup'
-import { cpf } from 'cpf-cnpj-validator'; 
+import Validator from 'cpf-rg-validator'
 
 import User from '../models/User';
 
@@ -29,10 +29,18 @@ class UserController{
         }
 
         /* Validar se é um cpf válido*/
-        const isCpf = cpf.isValid(req.body.cpf);
+        const isCpf = Validator.cpf(req.body.cpf);
 
         if(!isCpf){
             return res.status(400).json({error: "Esse não é um cpf válido"});
+        }
+
+        /* Validar se é um rg válido*/
+        const isRg = Validator.rg(req.body.rg)
+        console.log(isRg)
+
+        if(!isRg){
+            return res.status(400).json({error: "Esse não é um rg válido"});
         }
 
         /* Validar se o e-mail já está em uso*/
@@ -54,6 +62,21 @@ class UserController{
     }
 
     async update(req, res){
+        /* Validar os campos */
+        const schema = Yup.object().shape({
+            name: Yup.string().required(),
+            email: Yup.string().email().required(),
+            cpf: Yup.string().required(),
+            rg: Yup.string().required(),
+            phone: Yup.string(),
+            number: Yup.string()
+        });
+
+        if(!(await schema.isValid(req.body))){
+            const teste = await schema.isValid(req.body)
+            return res.status(400).json({error: "A validação falhou, lembre-se os campos são obrigatórios e a senha precisa ter no minimo 6 digitos."})
+        }
+
         const userEdit = await User.findByPk(req.params.id)
 
         const { email, username } = req.body
@@ -71,6 +94,22 @@ class UserController{
             const userExists = await User.findOne({where: {username}})
             if(userExists){
                 return res.status(400).json({error: "O nome de usuário já está em uso"})
+            }
+        }
+
+        /* Verifico se o cpf é válido */
+        if(req.body.cpf && req.body.cpf !== userEdit.cpf){
+            const isValid = Validator.cpf(req.body.cpf)
+            if(!isValid){
+                return res.status(400).json({error: "O cpf é inválido"})
+            }
+        }
+
+        /* Verifico se o rg é válido */
+        if(req.body.rg && req.body.rg !== userEdit.rg){
+            const isValid = Validator.rg(req.body.rg)
+            if(!isValid){
+                return res.status(400).json({error: "O rg é inválido"})
             }
         }
 
