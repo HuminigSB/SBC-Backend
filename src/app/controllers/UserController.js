@@ -69,8 +69,7 @@ class UserController{
             cpf: Yup.string().required(),
             rg: Yup.string().required(),
             phone: Yup.string(),
-            number: Yup.string(),
-            username: Yup.string().required()
+            number: Yup.string()
         });
 
         if(!(await schema.isValid(req.body))){
