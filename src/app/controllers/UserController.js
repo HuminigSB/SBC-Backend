@@ -2,6 +2,7 @@ import * as Yup from 'yup'
 import Validator from 'cpf-rg-validator'
 
 import User from '../models/User';
+import { restart } from 'nodemon';
 
 class UserController{
     async index(req, res){
@@ -120,6 +121,9 @@ class UserController{
 
     async delete(req, res){
         const userEdit = await User.findByPk(req.body.id)
+        if(!userEdit){
+            return res.status(400).json({error: 'O usuário não existe'})
+        }
         await userEdit.destroy()
         return res.status(200).json({ success: `O usuário com id ${req.body.id} foi removido com sucesso.`})
     }
