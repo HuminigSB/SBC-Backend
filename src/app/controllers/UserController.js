@@ -38,7 +38,6 @@ class UserController{
 
         /* Validar se é um rg válido*/
         const isRg = Validator.rg(req.body.rg)
-        console.log(isRg)
 
         if(!isRg){
             return res.status(400).json({error: "Esse não é um rg válido"});
