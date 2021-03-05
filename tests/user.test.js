@@ -5,7 +5,7 @@ import app from '../src/app'
 import User from '../src/app/models/User'
 
 /* Testes
-  Listagem de usuáriios sem token de acesso ✔
+  Listagem de usuários sem token de acesso ✔
   Listagem de usuários com token de acesso ✔
 
   Cadastro de usuário sem campos obrigatórios (nome, e-mail, cpf, rg, username, password) ✔

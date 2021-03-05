@@ -1,2 +1,4 @@
 /node_modules
 /coverage
+/tests/database.sqlite
+/tests/database.sqlite-journal
