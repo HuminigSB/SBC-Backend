@@ -13,12 +13,12 @@ class UserController{
     async store(req, res){
         /* Validar os campos */
         const schema = Yup.object().shape({
-            name: Yup.string().required(),
+            name: Yup.string().matches(/^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$/).required(),
             email: Yup.string().email().required(),
             cpf: Yup.string().required(),
             rg: Yup.string().required(),
             phone: Yup.string(),
-            number: Yup.string(),
+            number: Yup.string().matches(/^[0-9]*$/),
             profile: Yup.string(),
             username: Yup.string().required(),
             password: Yup.string().required().min(6)
@@ -43,6 +43,13 @@ class UserController{
             return res.status(400).json({error: "Esse não é um rg válido"});
         }
 
+        /* Validar se o cpf já está em uso*/
+        const userCpfExists = await User.findOne({where: {cpf: req.body.cpf}});
+
+        if(userCpfExists){
+            return res.status(400).json({error: "Esse cpf já está em uso"});
+        }
+
         /* Validar se o e-mail já está em uso*/
         const userEmailExists = await User.findOne({where: {email: req.body.email}});
 
@@ -64,12 +71,12 @@ class UserController{
     async update(req, res){
         /* Validar os campos */
         const schema = Yup.object().shape({
-            name: Yup.string().required(),
+            name: Yup.string().matches(/^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$/).required(),
             email: Yup.string().email().required(),
             cpf: Yup.string().required(),
             rg: Yup.string().required(),
             phone: Yup.string(),
-            number: Yup.string()
+            number: Yup.string().matches(/^[0-9]*$/)
         });
 
         if(!(await schema.isValid(req.body))){
@@ -99,6 +106,14 @@ class UserController{
             const userExists = await User.findOne({where: {username}})
             if(userExists){
                 return res.status(400).json({error: "O nome de usuário já está em uso"})
+            }
+        }
+
+        /* Verificar se o cpf está em uso */
+        if(req.body.cpf && req.body.cpf !== userEdit.cpf){
+            const userExists = await User.findOne({where: { cpf: req.body.cpf }})
+            if(userExists){
+                return res.status(400).json({error: "O cpf já está em uso"})
             }
         }
 
