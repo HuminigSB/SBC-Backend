@@ -79,6 +79,7 @@ class UserController{
 
         const userEdit = await User.findByPk(req.params.id)
 
+        /* Verifico se o usuário existe ou não */
         if(!userEdit){
             return res.status(400).json({error: 'O usuário não existe'})
         }
