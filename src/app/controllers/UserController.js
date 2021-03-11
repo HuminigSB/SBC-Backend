@@ -73,11 +73,15 @@ class UserController{
         });
 
         if(!(await schema.isValid(req.body))){
-            const teste = await schema.isValid(req.body)
+            await schema.isValid(req.body)
             return res.status(400).json({error: "A validação falhou, lembre-se os campos são obrigatórios e a senha precisa ter no minimo 6 digitos."})
         }
 
         const userEdit = await User.findByPk(req.params.id)
+
+        if(!userEdit){
+            return res.status(400).json({error: 'O usuário não existe'})
+        }
 
         const { email, username } = req.body
 
