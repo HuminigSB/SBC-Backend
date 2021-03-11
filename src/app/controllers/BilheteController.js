@@ -23,8 +23,20 @@ class BilheteController{
     }
 
     async update(req, res){
+        const schema = Yup.object().shape({
+            id: Yup.number().required().positive().integer(),
+            reservado: Yup.boolean().required()
+        });
+
+        if(!(await schema.isValid(req.body))){
+            return res.status(400).json({error: "Verifique se todos os campos foram informados"})
+        }
         const {id, reservado} = req.body
         const bilheteEdit = await Bilhete.findByPk(id)
+
+        if(!bilheteEdit){
+            return res.status(400).json({error: 'O bilhete não existe'})
+        }
         
         await bilheteEdit.update({reservado});
 
