@@ -25,7 +25,6 @@ class UserController{
         });
 
         if(!(await schema.isValid(req.body))){
-            const teste = await schema.isValid(req.body)
             return res.status(400).json({error: "A validação falhou, lembre-se os campos são obrigatórios e a senha precisa ter no minimo 6 digitos."})
         }
 
@@ -80,7 +79,6 @@ class UserController{
         });
 
         if(!(await schema.isValid(req.body))){
-            await schema.isValid(req.body)
             return res.status(400).json({error: "A validação falhou, lembre-se os campos são obrigatórios e a senha precisa ter no minimo 6 digitos."})
         }
 
@@ -133,7 +131,11 @@ class UserController{
             }
         }
 
-        await userEdit.update(req.body);
+        const userEdited = await userEdit.update(req.body);
+
+        if(!userEdited){
+            return res.status(400).json({error: "Usuário não atualizado, tente novamente."});
+        }
 
         return res.status(200).json({success: "Usuário atualizado com sucesso"});
     }

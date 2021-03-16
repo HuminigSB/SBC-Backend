@@ -9,25 +9,29 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
+      id_sala: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
       row: {
-          type: Sequelize.STRING,
+          type: Sequelize.INTEGER,
           allowNull: false
       },
-      seat: {
+      column: {
         type: Sequelize.INTEGER,
         allowNull: false
      },
       value: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false
-      },
-      situation: {
-        type: Sequelize.ENUM,
-        values: ['active', 'inative']
       },
       type: {
         type: Sequelize.ENUM,
         values: ['economic', 'vip', 'doble', 'wheelchair']
+      },
+      active: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true
       },
       created_at: {
         type: Sequelize.DATE,

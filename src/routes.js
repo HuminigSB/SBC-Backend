@@ -33,6 +33,17 @@ routes.get('/bilhete', BilheteController.index);
 routes.put('/bilhete', BilheteController.update);
 routes.delete('/bilhete', BilheteController.delete);
 
+//Poltrona
+routes.post('/poltrona', PoltronaController.store);
+routes.get('/poltrona', PoltronaController.index);
+routes.put('/poltrona/:id', PoltronaController.update);
+routes.delete('/poltrona/:id', PoltronaController.delete);
+
+//Sala
+routes.post('/sala', SalaController.store);
+routes.get('/sala', SalaController.index);
+routes.delete('/sala', SalaController.delete);
+
 //Cinema
 routes.post('/cinema', CinemaController.store);
 routes.get('/cinema', CinemaController.index);
@@ -46,28 +57,16 @@ routes.put('/combo', ComboController.update);
 routes.delete('/combo', ComboController.delete);
 
 //Endereco
-routes.post('/combo', EnderecoController.store);
-routes.get('/combo', EnderecoController.index);
-routes.put('/combo', EnderecoController.update);
-routes.delete('/combo', EnderecoController.delete);
-
-//Poltrona
-routes.post('/combo', PoltronaController.store);
-routes.get('/combo', PoltronaController.index);
-routes.put('/combo', PoltronaController.update);
-routes.delete('/combo', PoltronaController.delete);
+routes.post('/endereco', EnderecoController.store);
+routes.get('/endereco', EnderecoController.index);
+routes.put('/endereco', EnderecoController.update);
+routes.delete('/endereco', EnderecoController.delete);
 
 //Reserva
 routes.post('/reserva', ReservaController.store);
 routes.get('/reserva', ReservaController.index);
 routes.put('/reserva', ReservaController.update);
 routes.delete('/reserva', ReservaController.delete);
-
-//Sala
-routes.post('/sala', SalaController.store);
-routes.get('/sala', SalaController.index);
-routes.put('/sala', SalaController.update);
-routes.delete('/sala', SalaController.delete);
 
 //Sessao
 routes.post('/sessao', SessaoController.store);
