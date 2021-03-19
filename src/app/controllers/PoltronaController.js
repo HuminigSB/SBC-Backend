@@ -3,7 +3,13 @@ import Poltrona from '../models/Poltrona';
 
 class PoltronaController{
     async index(req, res){
-        const poltronas = await Poltrona.findAll()
+        const poltronas = await Poltrona
+                .findAll({ 
+                    where: { 
+                        id_sala: req.params.id 
+                    },
+                    order: [['id', 'ASC']]
+                })
         return res.json(poltronas)
     }
 
