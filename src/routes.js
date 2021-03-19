@@ -35,7 +35,7 @@ routes.delete('/bilhete', BilheteController.delete);
 
 //Poltrona
 routes.post('/poltrona', PoltronaController.store);
-routes.get('/poltrona', PoltronaController.index);
+routes.get('/poltrona/:id', PoltronaController.index);
 routes.put('/poltrona/:id', PoltronaController.update);
 routes.delete('/poltrona/:id', PoltronaController.delete);
 

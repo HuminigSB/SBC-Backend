@@ -3,18 +3,7 @@ import Poltrona from '../models/Poltrona';
 
 class PoltronaController{
     async index(req, res){
-        /* Validar os campos */
-        const schema = Yup.object().shape({
-            id_sala: Yup.number().positive().required()
-        });
-
-        if(!(await schema.isValid(req.body))){
-            return res.status(400).json({error: "A validação falhou!"})
-        }
-
-        const { id_sala } = req.body
-
-        const poltronas = await Poltrona.findAll({ where: { id_sala }})
+        const poltronas = await Poltrona.findAll({ where: { id_sala: req.params.id }})
         return res.json(poltronas)
     }
 
