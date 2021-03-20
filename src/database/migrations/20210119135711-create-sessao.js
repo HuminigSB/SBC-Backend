@@ -9,9 +9,9 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
-      cod: {
-          type: Sequelize.STRING,
-          allowNull: false
+      id_sala: {
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       title_movie: {
         type: Sequelize.STRING,
@@ -21,12 +21,16 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      start: {
-        type: Sequelize.DATE,
+      data: {
+        type: Sequelize.STRING,
         allowNull: false
       },
-      end: {
-        type: Sequelize.DATE,
+      inicio: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      fim: {
+        type: Sequelize.STRING,
         allowNull: false
       },
       created_at: {
