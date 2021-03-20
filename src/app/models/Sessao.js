@@ -3,11 +3,12 @@ import Sequelize, {Model} from 'sequelize';
 class Sessao extends Model{
     static init(sequelize){
         super.init({
-            cod: Sequelize.STRING,
+            idSala:  Sequelize.INTEGER,
             title_movie: Sequelize.STRING,
             description: Sequelize.STRING,
-            start: Sequelize.DATE,
-            end: Sequelize.DATE
+            data: Sequelize.STRING,
+            inicio: Sequelize.STRING,
+            fim: Sequelize.STRING
         },{
             sequelize
         });
