@@ -33,7 +33,24 @@ class SessaoController{
     }
 
     async update(req, res){
+        const schema = Yup.object().shape({
+            title_movie: Yup.string().required(),
+            description: Yup.string().required(),
+        });
+        if(!(await schema.isValid(req.body))){
+            return res.status(400).json({error: "Falha na Transmição de Dados"})
+        }
+        const sessaoEditar = await Sessao.findByPk(req.params.id)
+        if(!sessaoEditar){
+            return res.status(400).json({error: 'Sessão não encontrada'})
+        }
+        const sessaoEditada = await sessaoEditar.update(req.body);
 
+        if(!sessaoEditada){
+            return res.status(400).json({error: "Erro ao editar sessão tente novamente"});
+        }
+
+        return res.status(200).json({success: "Sessão editada com sucesso"});
     }
 
     async delete(req, res){
