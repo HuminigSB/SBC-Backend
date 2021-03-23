@@ -28,28 +28,28 @@ class ComboController{
         const { id_user, type } = req.body
    
         switch (type) {
-            case "1":
+            case 1:
                 const combo_one = await Combo.create({
                     id_user,
                     type: "none",
                     value: "0.00"
                 })
                 return res.status(200).json(combo_one)
-            case "2":
+            case 2:
                 const combo_two = await Combo.create({
                     id_user,
                     type: "popcorn",
                     value: "5.00"
                 })
                 return res.status(200).json(combo_two)
-            case "3":
+            case 3:
                 const combo_three = await Combo.create({
                     id_user,
                     type: "drink",
                     value: "5.00"
                 })
                 return res.status(200).json(combo_three)
-            case "4":
+            case 4:
                const combo_four = await Combo.create({
                     id_user,
                     type: "popcorn + drink",
