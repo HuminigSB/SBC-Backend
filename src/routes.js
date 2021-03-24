@@ -52,9 +52,7 @@ routes.delete('/cinema', CinemaController.delete);
 
 //Combo
 routes.post('/combo', ComboController.store);
-routes.get('/combo', ComboController.index);
-routes.put('/combo', ComboController.update);
-routes.delete('/combo', ComboController.delete);
+routes.get('/combo/:id', ComboController.index);
 
 //Endereco
 routes.post('/endereco', EnderecoController.store);
