@@ -72,6 +72,6 @@ routes.delete('/reserva', ReservaController.delete);
 routes.post('/sessao', SessaoController.store);
 routes.get('/sessao', SessaoController.index);
 routes.put('/sessao/:id', SessaoController.update);
-routes.delete('/sessao', SessaoController.delete);
+routes.delete('/sessao/:id', SessaoController.delete);
 
 export default routes;

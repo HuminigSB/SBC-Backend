@@ -1,12 +1,14 @@
-import * as Yup from 'yup'
+import * as Yup from 'yup';
 
 import Sessao from '../models/Sessao';
 import Bilhete from '../models/Bilhete';
 import Poltrona from '../models/Poltrona'
+import Observable from '../observer/Observable';
 
-class SessaoController{
+class SessaoController extends Observable{
     async index(req, res){
-
+        const sessoes = await Sessao.findAll()
+        return res.json(sessoes)
     }
 
     async store(req, res){
@@ -54,7 +56,20 @@ class SessaoController{
     }
 
     async delete(req, res){
-        
+        const bilhetes = await Bilhete.findAll({where: {id_sessao: req.params.id},order: [['id', 'ASC']]})
+        await super.subscribe(bilhetes)
+
+        const sessaoDelete = await Sessao.findByPk(req.params.id)
+        if(!sessaoDelete){
+            return res.status(400).json({error: 'A sessão não existe'})
+        }
+        const sessaoDeleted = await sessaoDelete.destroy();
+        if(sessaoDeleted){
+            await super.notify()  
+            return res.status(200).json({success: "Sessão deletada com sucesso!"})
+        } 
+          
+        return res.status(400).json({success: "Erro ao deletar a sessão!"})
     }
 }
 
