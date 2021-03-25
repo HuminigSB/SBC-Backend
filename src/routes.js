@@ -29,7 +29,7 @@ routes.delete('/user', UserController.delete);
 
 //Bilhete
 routes.post('/bilhete', BilheteController.store);
-routes.get('/bilhete', BilheteController.index);
+routes.get('/bilhete/:id_sessao', BilheteController.index);
 routes.put('/bilhete', BilheteController.update);
 routes.delete('/bilhete', BilheteController.delete);
 
@@ -70,6 +70,6 @@ routes.delete('/reserva', ReservaController.delete);
 routes.post('/sessao', SessaoController.store);
 routes.get('/sessao', SessaoController.index);
 routes.put('/sessao/:id', SessaoController.update);
-routes.delete('/sessao', SessaoController.delete);
+routes.delete('/sessao/:id', SessaoController.delete);
 
 export default routes;

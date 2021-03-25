@@ -1,4 +1,5 @@
 import Sequelize, {Model} from 'sequelize';
+import Observer from '../observer/Observer';
 
 class Bilhete extends Model{
     static init(sequelize){
@@ -10,6 +11,9 @@ class Bilhete extends Model{
         },{
             sequelize
         });
+    }
+    chamaObserver(observer){
+        Observer.updateObserver(observer,"bilheteRemocao")
     }
 }
 
