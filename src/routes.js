@@ -29,7 +29,7 @@ routes.delete('/user', UserController.delete);
 
 //Bilhete
 routes.post('/bilhete', BilheteController.store);
-routes.get('/bilhete', BilheteController.index);
+routes.get('/bilhete/:id_sessao', BilheteController.index);
 routes.put('/bilhete', BilheteController.update);
 routes.delete('/bilhete', BilheteController.delete);
 

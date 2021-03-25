@@ -3,7 +3,8 @@ import * as Yup from 'yup';
 
 class BilheteController{
     async index(req, res){
-  
+        const bilhetes = await Bilhete.findAll({where: {id_sessao: req.params.id_sessao},order: [['id', 'ASC']]})
+        return res.json(bilhetes)
     }
 
     async store(req, res){
