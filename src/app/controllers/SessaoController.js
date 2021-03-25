@@ -66,6 +66,9 @@ class SessaoController extends Observable{
         const sessaoDeleted = await sessaoDelete.destroy();
         if(sessaoDeleted){
             await super.notify()  
+            bilhetes.forEach(bilhete =>{
+                super.unsubscribe(bilhete)
+            })
             return res.status(200).json({success: "Sessão deletada com sucesso!"})
         } 
           

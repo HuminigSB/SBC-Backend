@@ -10,7 +10,7 @@ class Observable{
     }
 
     unsubscribe(observer) {
-        const observerIndex = this.vetorObservers.indexOf(observer);
+        const observerIndex = vetorObservers.indexOf(observer);
         if (observerIndex !== -1) {
             vetorObservers.splice(observerIndex, 1);
         }
