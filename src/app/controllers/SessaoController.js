@@ -17,13 +17,13 @@ class SessaoController extends Observable{
             title_movie: Yup.string().required(),
             description: Yup.string().required(),
             data: Yup.string().required(),
-            inicio: Yup.string().required(),
-            fim: Yup.string().required()
+            inicio: Yup.date().required(),
+            fim: Yup.date().required()
         });
         if(!(await schema.isValid(req.body))){
             return res.status(400).json({error: "Falha na Transmição de Dados"})
         }
-        const dataSessao = await Sessao.create(req.body)
+        const dataSessao = await Sessao.create(req.body)        
         if(dataSessao.id){
             const poltronas = await Poltrona.findAll({where: {id_sala: dataSessao.idSala},order: [['id', 'ASC']]})
             for(let i = 0; i < poltronas.length; i = i + 1 ) {

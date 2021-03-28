@@ -26,12 +26,15 @@ module.exports = {
         allowNull: false
       },
       inicio: {
-        type: Sequelize.STRING,
+        type: Sequelize.DATE,
         allowNull: false
       },
       fim: {
-        type: Sequelize.STRING,
+        type: Sequelize.DATE,
         allowNull: false
+      },
+      link_img:{
+        type: Sequelize.STRING,
       },
       created_at: {
         type: Sequelize.DATE,

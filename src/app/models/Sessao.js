@@ -7,8 +7,9 @@ class Sessao extends Model{
             title_movie: Sequelize.STRING,
             description: Sequelize.STRING,
             data: Sequelize.STRING,
-            inicio: Sequelize.STRING,
-            fim: Sequelize.STRING
+            inicio: Sequelize.DATE,
+            fim: Sequelize.DATE,
+            linkImg: Sequelize.STRING
         },{
             sequelize
         });
