@@ -9,6 +9,14 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
+      id_user: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      value: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       type: {
         type: Sequelize.ENUM,
         values: ['none', 'popcorn', 'drink', 'popcorn + drink']
