@@ -29,8 +29,8 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false
       },
-      fim: {
-        type: Sequelize.DATE,
+      duracao: {
+        type: Sequelize.STRING,
         allowNull: false
       },
       link_img:{
