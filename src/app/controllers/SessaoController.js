@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import {add, isAfter, parseISO, isEqual} from 'date-fns'
 
 import Sessao from '../models/Sessao';
 import Bilhete from '../models/Bilhete';
@@ -18,20 +19,43 @@ class SessaoController extends Observable{
             description: Yup.string().required(),
             data: Yup.string().required(),
             inicio: Yup.date().required(),
-            fim: Yup.date().required()
+            duracao: Yup.string().required()
         });
         if(!(await schema.isValid(req.body))){
             return res.status(400).json({error: "Falha na Transmição de Dados"})
         }
-        const dataSessao = await Sessao.create(req.body)        
-        if(dataSessao.id){
-            const poltronas = await Poltrona.findAll({where: {id_sala: dataSessao.idSala},order: [['id', 'ASC']]})
-            for(let i = 0; i < poltronas.length; i = i + 1 ) {
-                await Bilhete.create({id_sessao: dataSessao.id, id_sala: dataSessao.idSala, id_poltrona: poltronas[i].id, reservado: false});
+        const {inicio, duracao, idSala, data} = req.body
+        const duracaoInserir = duracao.split(":")
+        const fim = add(parseISO(inicio), {hours: duracaoInserir[0], minutes: duracaoInserir[1]})
+        const sessoes = await Sessao.findAll({where: {id_sala: idSala, data: data}})
+        let taOk = true
+        sessoes.forEach(sessao=>{
+            const duracaoSessao = sessao.dataValues.duracao.split(":")
+            if(isAfter(fim,sessao.dataValues.inicio) && isAfter(add(sessao.dataValues.inicio, {hours: duracaoSessao[0], minutes: duracaoSessao[1]}),fim)){
+                taOk=false
             }
-            return res.status(200).json({sucesso: "Sessão criada"})
+            if(isAfter(parseISO(inicio),sessao.dataValues.inicio) && isAfter(add(sessao.dataValues.inicio, {hours: duracaoSessao[0], minutes: duracaoSessao[1]}),parseISO(inicio))){
+                taOk=false
+            }
+            if(isEqual(parseISO(inicio), sessao.dataValues.inicio)){
+                taOk=false
+            }
+            if(isEqual(fim,add(sessao.dataValues.inicio, {hours: duracaoSessao[0], minutes: duracaoSessao[1]}))){
+                taOk=false
+            }
+        })
+        if(!taOk){
+            return res.status(400).json({error: "Esta sala esta ocupada nesse horario"})
         }
-        return res.status(400).json({sucesso: "Falha na criação da sessão"})
+        const dataSessao = await Sessao.create(req.body)        
+        if(!dataSessao.id){
+            return res.status(400).json({error: "Falha na criação da sessão"})
+        }
+        const poltronas = await Poltrona.findAll({where: {id_sala: dataSessao.idSala},order: [['id', 'ASC']]})
+        for(let i = 0; i < poltronas.length; i = i + 1 ) {
+            await Bilhete.create({id_sessao: dataSessao.id, id_sala: dataSessao.idSala, id_poltrona: poltronas[i].id, reservado: false});
+        }
+        return res.status(200).json({sucesso: "Sessão criada"})
     }
 
     async update(req, res){

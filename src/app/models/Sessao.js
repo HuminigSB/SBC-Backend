@@ -8,7 +8,7 @@ class Sessao extends Model{
             description: Sequelize.STRING,
             data: Sequelize.STRING,
             inicio: Sequelize.DATE,
-            fim: Sequelize.DATE,
+            duracao: Sequelize.STRING,
             linkImg: Sequelize.STRING
         },{
             sequelize
