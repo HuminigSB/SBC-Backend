@@ -4,9 +4,6 @@ import * as Yup from 'yup';
 class BilheteController{
     async index(req, res){
         const bilhetes = await Bilhete.findAll({where: {id_sessao: req.params.id_sessao},order: [['id', 'ASC']]})
-        if(bilhetes !== null){
-            return res.status(400).json({error: "Bilhetes não encontrados"})
-        }
         return res.json(bilhetes)
     }
 
