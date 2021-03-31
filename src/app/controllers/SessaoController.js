@@ -8,8 +8,12 @@ import Observable from '../observer/Observable';
 
 class SessaoController extends Observable{
     async index(req, res){
-        const sessoes = await Sessao.findAll()
-        return res.json(sessoes)
+        if(req.params.id == -1){
+            const sessoes = await Sessao.findAll()
+            return res.json(sessoes)
+        }
+        const sessao = await Sessao.findByPk(req.params.id)
+        return res.json(sessao)
     }
 
     async store(req, res){
