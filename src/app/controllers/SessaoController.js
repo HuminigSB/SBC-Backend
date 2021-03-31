@@ -8,7 +8,6 @@ import Observable from '../observer/Observable';
 
 class SessaoController extends Observable{
     async index(req, res){
-        console.log(req.params.id == -1)
         if(req.params.id == -1){
             const sessoes = await Sessao.findAll()
             return res.json(sessoes)
