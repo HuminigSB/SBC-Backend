@@ -5,7 +5,7 @@ import Poltrona from '../models/Poltrona'
 class SalaController{
     async index(req, res){
         const sala = await Sala.findAll()
-        return res.json(sala)
+        return res.status(200).json(sala)
     }
 
     async store(req, res){
@@ -45,9 +45,9 @@ class SalaController{
 
         const salaDelete = await Sala.findByPk(req.body.id)
 
-        /* Verifico se a poltrona existe ou não */
+        /* Verifico se a sala existe ou não */
         if(!salaDelete){
-            return res.status(400).json({error: 'A poltrona não existe'})
+            return res.status(400).json({error: 'A Sala não existe'})
         }
 
         /* Faço a deleção de todas as poltronas relacionados a essa sala */
