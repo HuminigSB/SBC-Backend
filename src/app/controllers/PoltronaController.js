@@ -10,7 +10,7 @@ class PoltronaController{
                     },
                     order: [['id', 'ASC']]
                 })
-        return res.json(poltronas)
+        return res.status(200).json(poltronas)
     }
 
     async store(req, res){
@@ -38,7 +38,7 @@ class PoltronaController{
                     type: 'economic'
                 })
                 if(poltrona1){
-                    return res.status(200).json({error: 'Poltrona criada com sucesso!'})
+                    return res.status(200).json({success: 'Poltrona criada com sucesso!'})
                 }
                 return res.status(400).json({error: 'Erro ao criar a poltrona'})
             case 2:
@@ -50,7 +50,7 @@ class PoltronaController{
                     type: 'vip'
                 })
                 if(poltrona2){
-                    return res.status(200).json({error: 'Poltrona criada com sucesso!'})
+                    return res.status(200).json({success: 'Poltrona criada com sucesso!'})
                 }
                 return res.status(400).json({error: 'Erro ao criar a poltrona'})
             case 3:
@@ -62,7 +62,7 @@ class PoltronaController{
                     type: 'doble'
                 })
                 if(poltrona3){
-                    return res.status(200).json({error: 'Poltrona criada com sucesso!'})
+                    return res.status(200).json({success: 'Poltrona criada com sucesso!'})
                 }
                 return res.status(400).json({error: 'Erro ao criar a poltrona'})
             case 4:
@@ -74,7 +74,7 @@ class PoltronaController{
                     type: 'wheelchair'
                 })
                 if(poltrona4){
-                    return res.status(200).json({error: 'Poltrona criada com sucesso!'})
+                    return res.status(200).json({success: 'Poltrona criada com sucesso!'})
                 }
                 return res.status(400).json({error: 'Erro ao criar a poltrona'})
             default:
