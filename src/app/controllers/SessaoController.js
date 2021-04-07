@@ -18,7 +18,7 @@ class SessaoController extends Observable{
 
     async store(req, res){
         const schema = Yup.object().shape({
-            idSala: Yup.number().required().positive().integer(),
+            idSala: Yup.string().matches(/^[0-9]*$/).required(),
             title_movie: Yup.string().required(),
             description: Yup.string().required(),
             data: Yup.string().required(),
@@ -26,7 +26,7 @@ class SessaoController extends Observable{
             duracao: Yup.string().required()
         });
         if(!(await schema.isValid(req.body))){
-            return res.status(400).json({error: "Falha na Transmição de Dados"})
+            return res.status(400).json({error: "Falha na Transmissão de Dados"})
         }
         const {inicio, duracao, idSala, data} = req.body
         const duracaoInserir = duracao.split(":")
@@ -68,7 +68,7 @@ class SessaoController extends Observable{
             description: Yup.string().required(),
         });
         if(!(await schema.isValid(req.body))){
-            return res.status(400).json({error: "Falha na Transmição de Dados"})
+            return res.status(400).json({error: "Falha na Transmissão de Dados"})
         }
         const sessaoEditar = await Sessao.findByPk(req.params.id)
         if(!sessaoEditar){

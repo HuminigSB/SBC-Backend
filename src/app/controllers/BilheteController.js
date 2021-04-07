@@ -9,12 +9,12 @@ class BilheteController{
 
     async store(req, res){
         const schema = Yup.object().shape({
-            id_sessao: Yup.number().required().positive().integer(),
-            id_sala: Yup.number().required().positive().integer(),
-            id_poltrona: Yup.number().required().positive().integer()
+            id_sessao: Yup.string().matches(/^[0-9]*$/).required(),
+            id_sala: Yup.string().matches(/^[0-9]*$/).required(),
+            id_poltrona: Yup.string().matches(/^[0-9]*$/).required()
         });
         if(!(await schema.isValid(req.body))){
-            return res.status(400).json({error: "Falha na Transmição de Dados"})
+            return res.status(400).json({error: "Falha na Transmissão de Dados"})
         }
         const {id_sessao, id_sala, id_poltrona} = req.body
         const data = {id_sessao, id_sala, id_poltrona, reservado: false}
@@ -25,7 +25,7 @@ class BilheteController{
 
     async update(req, res){
         const schema = Yup.object().shape({
-            id: Yup.number().required().positive().integer(),
+            id: Yup.string().matches(/^[0-9]*$/).required(),
             reservado: Yup.boolean().required()
         });
 
