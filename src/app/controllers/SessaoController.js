@@ -49,7 +49,7 @@ class SessaoController extends Observable{
             }
         })
         if(!taOk){
-            return res.status(400).json({error: "Esta sala esta ocupada nesse horario"})
+            return res.status(400).json({error: "Esta sala está ocupada nesse horário"})
         }
         const dataSessao = await Sessao.create(req.body)        
         if(!dataSessao.id){
