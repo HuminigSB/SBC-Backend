@@ -1,13 +1,16 @@
 Como rodar nosso sistema:
 </br>
+
 - É o preciso instalar os seguintes aplicativos (node, yarn e docker)
-</br>
+  </br>
 - Criar um banco de dados postgres > "docker run --name database -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres"
-</br>
+  </br>
 - Agora dentro da pasta do sistema no backend, crie nossas tabelas no banco > "yarn sequelize db:migrate>
-</br>
+  </br>
 - Instale todas dependências > "yarn install"
-</br>
+  </br>
 - Iniciar o servidor > "yarn start"
-</br>
+  </br>
 - Rodar os testes > "yarn test"
+  </br>
+- Caso executar teste no windows rodar previamente comando "npm install -g win-node-env"

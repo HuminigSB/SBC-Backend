@@ -7,10 +7,7 @@
     "start": "nodemon src/server.js",
     "pretest": "NODE_ENV=test sequelize db:migrate",
     "test": "NODE_ENV=test jest --silent --noStackTrace --watch --runInBand",
-    "protest": "NODE_ENV=test sequelize db:migrate:undo:all",
-    "pretestw": "SET NODE_ENV=test && sequelize db:migrate",
-    "testw": "SET NODE_ENV=test && jest --silent --noStackTrace --watch --runInBand",
-    "protestw": "SET NODE_ENV=test && sequelize db:migrate:undo:all"
+    "protest": "NODE_ENV=test sequelize db:migrate:undo:all"
   },
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.13.9",
