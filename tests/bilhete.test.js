@@ -13,6 +13,9 @@ import Bilhete from '../src/app/models/Bilhete'
   Atualização de bilhete sem campos obrigatórios (id, reservado) ✔
   Atualização de bilhete sem token de acesso ✔
   Atualização de bilhete com dados corretos  ✔
+
+  Listar bilhetes sem token de acesso ✔
+  Listar bilhetes com tudo certo ✔
 */
 
 const mockAccessToken = async () => {
@@ -175,6 +178,25 @@ describe('Bilhete tests', () => {
       id: '1',
       reservado: true
     })
+    .then(response => {
+      expect(response.statusCode).toBe(200)
+    });
+  })
+
+  /* GET */
+  it('Should return 401 if try get bilhete without acessToken', async () => {
+    await request(app)
+    .get('/bilhete/1')
+    .then(response => {
+      expect(response.statusCode).toBe(401)
+    });
+  })
+
+  it('Should return 200 on success get bilhete with all correct', async () => {
+    const accessToken = await mockAccessToken()
+    await request(app)
+    .get('/bilhete/1')
+    .set('Authorization', `Bearer ${accessToken}`)
     .then(response => {
       expect(response.statusCode).toBe(200)
     });
