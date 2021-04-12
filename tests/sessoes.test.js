@@ -10,6 +10,7 @@ import Sessao from '../src/app/models/Sessao'
   Inserção de sessao sem token de acesso ✔
   Inserção de sessao com dados corretos ✔
   Inserção de sessao com valor invalido para o campo idSala ✔
+  Inserção de sessao com sala ocupada no horario solicitado ✔
 
   Editar sessao sem campos obrigatórios (title_movie, description) ✔
   Editar sessao sem token de acesso ✔
@@ -198,6 +199,32 @@ describe('Sessao tests', () => {
     .set('Authorization', `Bearer ${accessToken}`)
     .send({
       idSala:'1a',
+      title_movie:'In the Heights',
+      description:'As luzes se acendem em Washington Heights... O cheirinho de um cafecito caliente paira no ar, na saída da estação de metrô da Rua 181, onde um caleidoscópio de sonhos mobiliza essa comunidade vibrante e muito unida.  No meio de tudo, temos o querido e magnético dono de uma mercearia, Usnavi (Anthony Ramos), que economiza cada centavo do seu dia de trabalho enquanto torce, imagina e canta sobre uma vida melhor.',
+      data:'15/07/2021',
+      inicio:'2021-07-15 00:15:32.133+00',
+      duracao:'01:55'
+    })
+    .then(response => {
+      expect(response.statusCode).toBe(400)
+    });
+  })
+
+  it('Should return 400 if another sessao use the sala en the sending date', async () => {
+    const accessToken = await mockAccessToken()
+    await request(app).post('/sessao').set('Authorization', `Bearer ${accessToken}`).send({//cria sessão com horario conflituoso
+      idSala:'1',
+      title_movie:'In the Heights',
+      description:'As luzes se acendem em Washington Heights... O cheirinho de um cafecito caliente paira no ar, na saída da estação de metrô da Rua 181, onde um caleidoscópio de sonhos mobiliza essa comunidade vibrante e muito unida.  No meio de tudo, temos o querido e magnético dono de uma mercearia, Usnavi (Anthony Ramos), que economiza cada centavo do seu dia de trabalho enquanto torce, imagina e canta sobre uma vida melhor.',
+      data:'15/07/2021',
+      inicio:'2021-07-15 00:15:32.133+00',
+      duracao:'01:35'
+    })
+    await request(app)
+    .post('/sessao')
+    .set('Authorization', `Bearer ${accessToken}`)
+    .send({
+      idSala:'1',
       title_movie:'In the Heights',
       description:'As luzes se acendem em Washington Heights... O cheirinho de um cafecito caliente paira no ar, na saída da estação de metrô da Rua 181, onde um caleidoscópio de sonhos mobiliza essa comunidade vibrante e muito unida.  No meio de tudo, temos o querido e magnético dono de uma mercearia, Usnavi (Anthony Ramos), que economiza cada centavo do seu dia de trabalho enquanto torce, imagina e canta sobre uma vida melhor.',
       data:'15/07/2021',

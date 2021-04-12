@@ -5,7 +5,7 @@ class Sessao extends Model{
         super.init({
             idSala:  Sequelize.INTEGER,
             title_movie: Sequelize.STRING,
-            description: Sequelize.STRING,
+            description: Sequelize.TEXT,
             data: Sequelize.STRING,
             inicio: Sequelize.DATE,
             duracao: Sequelize.STRING,
