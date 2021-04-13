@@ -14,6 +14,7 @@ class User extends Model{
             password: Sequelize.STRING,
             profile: Sequelize.ENUM('admin', 'funcionario', 'cliente')
         },{
+            tableName: 'users',
             sequelize
         });
 
