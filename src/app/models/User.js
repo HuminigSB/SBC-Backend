@@ -17,7 +17,7 @@ class User extends Model{
             sequelize
         });
 
-        this.addHook('beforeSave', async user => {
+        this.addHook('beforeCreate', async user => {
             if(user.password){
                 user.password = await bcrypt.hash(user.password, 8)
             }

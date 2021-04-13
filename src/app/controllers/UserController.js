@@ -2,7 +2,6 @@ import * as Yup from 'yup'
 import Validator from 'cpf-rg-validator'
 
 import User from '../models/User';
-import { restart } from 'nodemon';
 
 class UserController{
     async index(req, res){
