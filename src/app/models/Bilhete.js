@@ -9,6 +9,7 @@ class Bilhete extends Model{
             id_poltrona: Sequelize.INTEGER,
             reservado: Sequelize.BOOLEAN
         },{
+            tableName: 'bilhetes',
             sequelize
         });
     }
