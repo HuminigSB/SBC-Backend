@@ -48,10 +48,6 @@ const mockAccessToken = async () => {
     return token
 }
 
-const mockAccessTokenInvalid = async () =>{
-  return '123abc'
-}
-
 describe('Sessao tests', () => {
   beforeEach(async () => {
     await User.sync({force: true}),
@@ -59,7 +55,7 @@ describe('Sessao tests', () => {
   })
 
   /* POST */
-  it('Should return 400 if not send a id_sala', async () => {
+  it('Should return 400 if not send a id_sala', async () => {//C4
     const accessToken = await mockAccessToken()
     await request(app)
     .post('/sessao')
@@ -219,7 +215,7 @@ describe('Sessao tests', () => {
     });
   })
 
-  it('Should return 400 if send a invalid id_sala', async () => {
+  it('Should return 400 if send a invalid id_sala', async () => {//C10
     const accessToken = await mockAccessToken()
     await request(app)
     .post('/sessao')
