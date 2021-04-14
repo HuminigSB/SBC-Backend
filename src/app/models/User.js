@@ -14,10 +14,11 @@ class User extends Model{
             password: Sequelize.STRING,
             profile: Sequelize.ENUM('admin', 'funcionario', 'cliente')
         },{
+            tableName: 'users',
             sequelize
         });
 
-        this.addHook('beforeSave', async user => {
+        this.addHook('beforeCreate', async user => {
             if(user.password){
                 user.password = await bcrypt.hash(user.password, 8)
             }

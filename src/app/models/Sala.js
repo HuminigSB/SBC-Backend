@@ -5,6 +5,7 @@ class Sala extends Model{
         super.init({
             total: Sequelize.INTEGER
         },{
+            tableName: 'salas',
             sequelize
         });
     }

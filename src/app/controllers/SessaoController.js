@@ -18,7 +18,7 @@ class SessaoController extends Observable{
 
     async store(req, res){
         const schema = Yup.object().shape({
-            idSala: Yup.string().matches(/^[0-9]*$/).required(),
+            id_sala: Yup.string().matches(/^[0-9]*$/).required(),
             title_movie: Yup.string().required(),
             description: Yup.string().required(),
             data: Yup.string().matches(/^(((0[1-9]|[12][0-9]|3[01])([\/])(0[13578]|10|12)([\/])(\d{4}))|(([0][1-9]|[12][0-9]|30)([\/])(0[469]|11)([\/])(\d{4}))|((0[1-9]|1[0-9]|2[0-8])([\/])(02)([\/])(\d{4}))|((29)(\.|-|\/)(02)([\/])([02468][048]00))|((29)([\/])(02)([\/])([13579][26]00))|((29)([\/])(02)([\/])([0-9][0-9][0][48]))|((29)([\/])(02)([\/])([0-9][0-9][2468][048]))|((29)([\/])(02)([\/])([0-9][0-9][13579][26])))$/).required(),
@@ -28,10 +28,10 @@ class SessaoController extends Observable{
         if(!(await schema.isValid(req.body))){
             return res.status(400).json({error: "Falha na Transmissão de Dados"})
         }
-        const {inicio, duracao, idSala, data} = req.body
+        const {inicio, duracao, id_sala, data} = req.body
         const duracaoInserir = duracao.split(":")
         const fim = add(parseISO(inicio), {hours: duracaoInserir[0], minutes: duracaoInserir[1]})
-        const sessoes = await Sessao.findAll({where: {id_sala: idSala, data: data}})
+        const sessoes = await Sessao.findAll({where: {id_sala: id_sala, data: data}})
         let taOk = true
         sessoes.forEach(sessao=>{
             const duracaoSessao = sessao.dataValues.duracao.split(":")
@@ -55,9 +55,9 @@ class SessaoController extends Observable{
         if(!dataSessao.id){
             return res.status(400).json({error: "Falha na criação da sessão"})
         }
-        const poltronas = await Poltrona.findAll({where: {id_sala: dataSessao.idSala},order: [['id', 'ASC']]})
+        const poltronas = await Poltrona.findAll({where: {id_sala: dataSessao.id_sala},order: [['id', 'ASC']]})
         for(let i = 0; i < poltronas.length; i = i + 1 ) {
-            await Bilhete.create({id_sessao: dataSessao.id, id_sala: dataSessao.idSala, id_poltrona: poltronas[i].id, reservado: false});
+            await Bilhete.create({id_sessao: dataSessao.id, id_sala: dataSessao.id_sala, id_poltrona: poltronas[i].id, reservado: false});
         }
         return res.status(200).json({sucesso: "Sessão criada"})
     }

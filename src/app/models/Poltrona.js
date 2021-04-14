@@ -10,6 +10,7 @@ class Poltrona extends Model{
             type: Sequelize.ENUM('economic', 'vip', 'doble', 'wheelchair'),
             active: Sequelize.BOOLEAN
         },{
+            tableName: 'poltronas',
             sequelize
         });
     }

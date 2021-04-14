@@ -43,10 +43,6 @@ class BilheteController{
 
         return res.status(200).json({success: "Bilhete atualizado com sucesso"});
     }
-
-    async delete(req, res){
-        
-    }
 }
 
 export default new BilheteController();
