@@ -8,13 +8,16 @@ import Bilhete from '../src/app/models/Bilhete'
 /* Testes
   Inserção de bilhete sem campos obrigatórios (id_sessao, id_sala, id_poltrona) ✔
   Inserção de bilhete sem token de acesso ✔
+  Inserção de bilhete com token de acesso inválido ✔
   Inserção de bilhete com dados corretos  ✔
 
   Atualização de bilhete sem campos obrigatórios (id, reservado) ✔
   Atualização de bilhete sem token de acesso ✔
+  Atualização de bilhete com token de acesso inválido ✔
   Atualização de bilhete com dados corretos  ✔
 
   Listar bilhetes sem token de acesso ✔
+  Listar bilhetes com token de acesso inválido ✔
   Listar bilhetes com tudo certo ✔
 */
 
@@ -96,6 +99,21 @@ describe('Bilhete tests', () => {
     });
   })
 
+  it('Should return 401 if send a invalid accessToken', async () => {
+    const accessToken = await mockAccessToken()
+    await request(app)
+    .post('/bilhete')
+    .set('Authorization', `Barrer ${accessToken}`)
+    .send({
+      id_sessao: '1',
+      id_sala: '1',
+      id_poltrona: '1'
+    })
+    .then(response => {
+      expect(response.statusCode).toBe(401)
+    });
+  })
+
   it('Should return 200 on success add a bilhete with all corrects values', async () => {
     const accessToken = await mockAccessToken()
     await request(app)
@@ -162,6 +180,27 @@ describe('Bilhete tests', () => {
     });
   })
 
+  it('Should return 401 if send a invalid accessToken', async () => {
+    const accessToken = await mockAccessToken()
+
+    await Bilhete.create({
+      id_sessao: '1',
+      id_sala: '1',
+      id_poltrona: '1'
+    })
+
+    await request(app)
+    .put('/bilhete')
+    .set('Authorization', `Barrer ${accessToken}`)
+    .send({
+      id: '1',
+      reservado: true
+    })
+    .then(response => {
+      expect(response.statusCode).toBe(401)
+    });
+  })
+
   it('Should return 200 on success updated', async () => {
     const accessToken = await mockAccessToken()
 
@@ -187,6 +226,16 @@ describe('Bilhete tests', () => {
   it('Should return 401 if try get bilhete without acessToken', async () => {
     await request(app)
     .get('/bilhete/1')
+    .then(response => {
+      expect(response.statusCode).toBe(401)
+    });
+  })
+
+  it('Should return 401 if send a invalid accessToken', async () => {
+    const accessToken = await mockAccessToken()
+    await request(app)
+    .get('/bilhete/1')
+    .set('Authorization', `Barrer ${accessToken}`)
     .then(response => {
       expect(response.statusCode).toBe(401)
     });
