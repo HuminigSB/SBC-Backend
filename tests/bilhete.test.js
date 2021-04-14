@@ -39,6 +39,10 @@ const mockAccessToken = async () => {
     return token
 }
 
+const mockAccessTokenInvalid = async () => {
+  return '123abc'
+}
+
 describe('Bilhete tests', () => {
   beforeEach(async () => {
     await User.sync({force: true}),
@@ -100,10 +104,10 @@ describe('Bilhete tests', () => {
   })
 
   it('Should return 401 if send a invalid accessToken', async () => {
-    const accessToken = await mockAccessToken()
+    const accessToken = await mockAccessTokenInvalid()
     await request(app)
     .post('/bilhete')
-    .set('Authorization', `Barrer ${accessToken}`)
+    .set('Authorization', `Bearer ${accessToken}`)
     .send({
       id_sessao: '1',
       id_sala: '1',
@@ -181,7 +185,7 @@ describe('Bilhete tests', () => {
   })
 
   it('Should return 401 if send a invalid accessToken', async () => {
-    const accessToken = await mockAccessToken()
+    const accessToken = await mockAccessTokenInvalid()
 
     await Bilhete.create({
       id_sessao: '1',
@@ -191,7 +195,7 @@ describe('Bilhete tests', () => {
 
     await request(app)
     .put('/bilhete')
-    .set('Authorization', `Barrer ${accessToken}`)
+    .set('Authorization', `Bearer ${accessToken}`)
     .send({
       id: '1',
       reservado: true
@@ -232,10 +236,10 @@ describe('Bilhete tests', () => {
   })
 
   it('Should return 401 if send a invalid accessToken', async () => {
-    const accessToken = await mockAccessToken()
+    const accessToken = await mockAccessTokenInvalid()
     await request(app)
     .get('/bilhete/1')
-    .set('Authorization', `Barrer ${accessToken}`)
+    .set('Authorization', `Bearer ${accessToken}`)
     .then(response => {
       expect(response.statusCode).toBe(401)
     });
