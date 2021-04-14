@@ -180,10 +180,10 @@ describe('Sessao tests', () => {
   })
 
   it('Should return 401 if send a invalid accessToken', async () => {//C3
-    const accessToken = await mockAccessToken()
+    const accessToken = await mockAccessTokenInvalid()
     await request(app)
     .post('/sessao')
-    .set('Authorization', `Barrer ${accessToken}`)
+    .set('Authorization', `Bearer ${accessToken}`)
     .send({
       id_sala:'1',
       title_movie:'In the Heights',
@@ -379,7 +379,7 @@ describe('Sessao tests', () => {
   })
 
   it('Should return 401 if send a invalid accessToken', async () => {
-    const accessToken = await mockAccessToken()
+    const accessToken = await mockAccessTokenInvalid()
     await request(app).post('/sessao').set('Authorization', `Bearer ${await mockAccessToken()}`).send({//cria sessão a ser editada
       id_sala:'1',
       title_movie:'In the Heights',
@@ -390,7 +390,7 @@ describe('Sessao tests', () => {
     })
     await request(app)
     .put('/sessao/1')
-    .set('Authorization', `Barrer ${accessToken}`)
+    .set('Authorization', `Bearer ${accessToken}`)
     .send({
       title_movie:'In the Heights',
       description:'As luzes se acendem em Washington Heights... O cheirinho de um cafecito caliente paira no ar, na saída da estação de metrô da Rua 181, onde um caleidoscópio de sonhos mobiliza essa comunidade vibrante e muito unida.  No meio de tudo, temos o querido e magnético dono de uma mercearia, Usnavi (Anthony Ramos), que economiza cada centavo do seu dia de trabalho enquanto torce, imagina e canta sobre uma vida melhor.'
@@ -441,6 +441,7 @@ describe('Sessao tests', () => {
 
   it('Should return 401 if send a invalid accessToken', async () => {
     const accessToken = await mockAccessToken()
+    const accessTokenInvalid = await mockAccessTokenInvalid()
     await request(app).post('/sessao').set('Authorization', `Bearer ${accessToken}`).send({//cria sessão a ser editada
       id_sala:'1',
       title_movie:'In the Heights',
@@ -451,7 +452,7 @@ describe('Sessao tests', () => {
     })
     await request(app)
     .delete('/sessao/1')
-    .set('Authorization', `Barrer ${accessToken}`)
+    .set('Authorization', `Bearer ${accessTokenInvalid}`)
     .then(response => {
       expect(response.statusCode).toBe(401)
     });
@@ -493,7 +494,7 @@ describe('Sessao tests', () => {
   })
 
   it('Should return 401 if send a invalid accessToken', async () => {
-    const accessToken = await mockAccessToken()
+    const accessToken = await mockAccessTokenInvalid()
     await request(app).post('/sessao').set('Authorization', `Bearer ${await mockAccessToken()}`).send({//cria sessão a ser editada
       id_sala:'1',
       title_movie:'In the Heights',
@@ -504,7 +505,7 @@ describe('Sessao tests', () => {
     })
     await request(app)
     .get('/sessao/-1')
-    .set('Authorization', `Barrer ${accessToken}`)
+    .set('Authorization', `Bearer ${accessToken}`)
     .then(response => {
       expect(response.statusCode).toBe(401)
     });
@@ -546,6 +547,7 @@ describe('Sessao tests', () => {
 
   it('Should return 401 if send a invalid accessToken', async () => {
     const accessToken = await mockAccessToken()
+    const accessTokenInvalid = await mockAccessTokenInvalid()
     await request(app).post('/sessao').set('Authorization', `Bearer ${accessToken}`).send({//cria sessão a ser editada
       id_sala:'1',
       title_movie:'In the Heights',
@@ -556,7 +558,7 @@ describe('Sessao tests', () => {
     })
     await request(app)
     .get('/sessao/1')
-    .set('Authorization', `Barrer ${accessToken}`)
+    .set('Authorization', `Bearer ${accessTokenInvalid}`)
     .then(response => {
       expect(response.statusCode).toBe(401)
     });
