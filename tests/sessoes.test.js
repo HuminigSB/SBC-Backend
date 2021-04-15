@@ -48,6 +48,10 @@ const mockAccessToken = async () => {
     return token
 }
 
+const mockAccessTokenInvalid = async () => {
+  return '123abc'
+}
+
 describe('Sessao tests', () => {
   beforeEach(async () => {
     await User.sync({force: true}),
